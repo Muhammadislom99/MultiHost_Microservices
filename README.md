@@ -47,7 +47,7 @@
 
 1.  **Клонируйте репозиторий:**
     ```bash
-    git clone [<URL репозитория>](https://github.com/Muhammadislom99/MultiHost_Microservices)
+    git clone https://github.com/Muhammadislom99/MultiHost_Microservices
     ```
 2.  **Перейдите в директорию `Server1` и запустите контейнеры:**
     ```bash
