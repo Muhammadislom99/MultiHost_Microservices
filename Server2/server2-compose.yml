@@ -27,6 +27,8 @@ services:
     image: otel/opentelemetry-collector-contrib:latest
     container_name: otel-collector-server2
     command: [ "--config=/etc/otel/config.yaml" ]
+    environment:
+      MAIN_COLLECTOR_HOST: "192.168.43.173"
     volumes:
       - ./otel-collector-config-server2.yaml:/etc/otel/config.yaml
     ports:
