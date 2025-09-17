@@ -1,4 +1,10 @@
-version: '3.8'
+version: "3.9"
+
+# Единое место для URL-ов внешних сервисов (без merge-keys)
+x-service-urls:
+  user_url: &user_url "http://192.168.43.173:5001"
+  product_url: &product_url "http://192.168.43.173:5002"
+
 services:
   sqlserver-orders:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -18,23 +24,26 @@ services:
     ports:
       - "6379:6379"
     command: [ "redis-server", "--save", "", "--appendonly", "no" ]
-  
-  
+
   order-service:
     build:
       context: .
       dockerfile: OrderService/Dockerfile
     container_name: order-service
+    depends_on:
+      - sqlserver-orders
+      - redis
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
-      - ConnectionStrings__DefaultConnection=Server=sqlserver-orders;Database=OrderDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
-      - Services__UserService=http://192.168.43.173:5001
-      - Services__ProductService=http://192.168.43.173:5002
-      - OTEL_DOTNET_EXPERIMENTAL_METRICS_EXEMPLAR_FILTER=always_on
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:80"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver-orders;Database=OrderDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;"
+      ConnectionStrings__Redis: "redis:6379"
+      Services__UserService: *user_url
+      Services__ProductService: *product_url
+      OTEL_DOTNET_EXPERIMENTAL_METRICS_EXEMPLAR_FILTER: "always_on"
     ports:
       - "5003:80"
-    restart: on-failure
+    restart: "on-failure"
 
   api-gateway:
     build:
@@ -42,15 +51,15 @@ services:
       dockerfile: ApiGateway/Dockerfile
     container_name: api-gateway
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
-      - Services__UserService=http://192.168.43.173:5001
-      - Services__ProductService=http://192.168.43.173:5002
-      - Services__OrderService=http://order-service:80
-      - OTEL_DOTNET_EXPERIMENTAL_METRICS_EXEMPLAR_FILTER=always_on
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:80"
+      Services__UserService: *user_url
+      Services__ProductService: *product_url
+      Services__OrderService: "http://order-service:80"
+      OTEL_DOTNET_EXPERIMENTAL_METRICS_EXEMPLAR_FILTER: "always_on"
     ports:
       - "5000:80"
-    restart: on-failure
+    restart: "on-failure"
 
   frontend:
     build:
@@ -59,7 +68,7 @@ services:
     container_name: frontend
     ports:
       - "3000:80"
-    restart: on-failure
+    restart: "on-failure"
 
   otel-collector:
     image: otel/opentelemetry-collector-contrib:latest
@@ -87,9 +96,9 @@ services:
     ports:
       - "9090:9090"
     command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --enable-feature=exemplar-storage
-      - --web.enable-otlp-receiver
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--enable-feature=exemplar-storage"
+      - "--web.enable-otlp-receiver"
 
   grafana:
     image: grafana/grafana:latest

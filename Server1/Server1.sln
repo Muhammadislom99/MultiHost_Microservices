@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService", "OrderService\OrderService.csproj", "{DB7ECA4C-AF42-4688-A71C-889EC6619812}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Observability", "..\Observability\Observability.csproj", "{38E00314-A36B-469C-8567-A0DFD58E18F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Observability", "Observability\Observability.csproj", "{9FD44FEF-5B61-4C92-9721-15F04333543C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,9 +20,9 @@ Global
 		{DB7ECA4C-AF42-4688-A71C-889EC6619812}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB7ECA4C-AF42-4688-A71C-889EC6619812}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB7ECA4C-AF42-4688-A71C-889EC6619812}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38E00314-A36B-469C-8567-A0DFD58E18F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38E00314-A36B-469C-8567-A0DFD58E18F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38E00314-A36B-469C-8567-A0DFD58E18F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38E00314-A36B-469C-8567-A0DFD58E18F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FD44FEF-5B61-4C92-9721-15F04333543C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FD44FEF-5B61-4C92-9721-15F04333543C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FD44FEF-5B61-4C92-9721-15F04333543C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FD44FEF-5B61-4C92-9721-15F04333543C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

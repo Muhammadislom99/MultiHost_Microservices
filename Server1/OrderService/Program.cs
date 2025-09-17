@@ -17,7 +17,7 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
 
 // Redis connection
 builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-    ConnectionMultiplexer.Connect("localhost:6379"));
+    ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("DefaultConnection") ?? "localhost:6379"));
 
 builder.Services.AddHttpClient<IUserService, UserService>(client =>
 {
@@ -34,15 +34,18 @@ builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
     // Self‑check — всегда Healthy, если сервис жив
     .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "self" })
-
+    
     // Пример зависимости
     .AddSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         name: "sqlserver",
         timeout: TimeSpan.FromSeconds(1)
+    )
+    .AddRedis(
+        builder.Configuration.GetConnectionString("Redis") ?? "localhost:6379",
+        name: "redis",
+        timeout: TimeSpan.FromSeconds(1)
     );
-
-
 
 builder.Services.AddSingleton<IHealthCheckPublisher, HealthCheckMetricsPublisher>();
 builder.Services.Configure<HealthCheckPublisherOptions>(options =>
