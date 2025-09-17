@@ -1,0 +1,27 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+exporters:
+  otlp/main-collector:
+    endpoint: "192.168.43.173:4317"  # IP server1, порт OTLP gRPC
+    tls:
+      insecure: true
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/main-collector]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/main-collector]
