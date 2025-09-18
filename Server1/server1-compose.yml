@@ -1,10 +1,10 @@
-version: "3.9"
-
 # Единое место для URL-ов внешних сервисов (без merge-keys)
 x-service-urls:
-  user_url: &user_url "http://192.168.43.173:5001"
-  product_url: &product_url "http://192.168.43.173:5002"
-
+#  user_url: &user_url "http://192.168.43.173:5001"
+#  product_url: &product_url "http://192.168.43.173:5002"
+  user_url: &user_url "http://10.33.10.40:5001"
+  product_url: &product_url "http://10.33.10.40:5002"
+  
 services:
   sqlserver-orders:
     image: mcr.microsoft.com/mssql/server:2019-latest

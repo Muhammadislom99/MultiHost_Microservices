@@ -28,13 +28,17 @@ services:
     container_name: otel-collector-server2
     command: [ "--config=/etc/otel/config.yaml" ]
     environment:
-      MAIN_COLLECTOR_HOST: "192.168.43.173"
+#      MAIN_COLLECTOR_HOST: "192.168.43.173"
+       MAIN_COLLECTOR_HOST: "10.33.10.40"
     volumes:
       - ./otel-collector-config-server2.yaml:/etc/otel/config.yaml
     ports:
-      - "4317:4317"
-      - "4318:4318"
-      - "8889:8889"
+#      - "4317:4317"
+#      - "4318:4318"
+#      - "8889:8889"
+      - "5317:5317"
+      - "5318:5318"
+      - "9889:9889"
 
   user-service:
     build:

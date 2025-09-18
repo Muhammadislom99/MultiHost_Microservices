@@ -23,7 +23,7 @@ public static class OpenTelemetryExtensions
                         options.SetDbStatementForText = true;
                         options.RecordException = true;
                     })
-                    .AddOtlpExporter(o => { o.Endpoint = new Uri("http://otel-collector:4317"); });
+                    .AddOtlpExporter(o => { o.Endpoint = new Uri("http://otel-collector:5317"); });
             })
             .WithMetrics(metricsProviderBuilder =>
             {
@@ -46,7 +46,7 @@ public static class OpenTelemetryExtensions
                         })
                     .AddOtlpExporter((o, m) =>
                     {
-                        o.Endpoint = new Uri("http://otel-collector:4317");
+                        o.Endpoint = new Uri("http://otel-collector:5317");
                         o.Protocol = OtlpExportProtocol.Grpc;
                         m.PeriodicExportingMetricReaderOptions.ExportIntervalMilliseconds = 1000;
                     });

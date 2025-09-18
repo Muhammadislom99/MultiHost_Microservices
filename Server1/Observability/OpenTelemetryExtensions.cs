@@ -23,6 +23,10 @@ public static class OpenTelemetryExtensions
                         options.SetDbStatementForText = true;
                         options.RecordException = true;
                     })
+                    .AddRedisInstrumentation(optioons =>
+                    {
+                        optioons.SetVerboseDatabaseStatements = true;
+                    })
                     .AddOtlpExporter(o => { o.Endpoint = new Uri("http://otel-collector:4317"); });
             })
             .WithMetrics(metricsProviderBuilder =>

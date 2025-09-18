@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Observability;
+using OrderService;
 using OrderService.Data;
 using OrderService.Services;
 using StackExchange.Redis;
@@ -17,7 +18,7 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
 
 // Redis connection
 builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-    ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("DefaultConnection") ?? "localhost:6379"));
+    ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis") ?? "localhost:6379"));
 
 builder.Services.AddHttpClient<IUserService, UserService>(client =>
 {
